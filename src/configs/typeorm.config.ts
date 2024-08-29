@@ -9,4 +9,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     database: 'pguser',
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: true,
+    // logging: true,
 };
