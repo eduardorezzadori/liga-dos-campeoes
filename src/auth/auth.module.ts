@@ -6,6 +6,7 @@ import { UserRepository } from 'src/users/users.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import { RolesGuard } from './roles.guards';
 
 @Module({
   imports: [
