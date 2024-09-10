@@ -7,6 +7,7 @@ import {
     Param,
     Patch,
     Post,
+    Query,
     UseGuards,
     ValidationPipe
 } from '@nestjs/common';
@@ -20,6 +21,7 @@ import { RolesGuard } from 'src/auth/roles.guards';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from './user.entity';
+import { FindUsersQueryDto } from './dto/find-users-query.dto';
 
 @Controller('users')
 @UseGuards(AuthGuard(), RolesGuard)
@@ -69,6 +71,16 @@ export class UsersController {
         await this.usersService.deleteUser(id);
         return {
             message: 'Usuário removido com sucesso',
+        };
+    }
+
+    @Get()
+    @Role(UserRole.ADMIN)
+    async findUsers(@Query() query: FindUsersQueryDto) {
+        const found = await this.usersService.findUsers(query);
+        return {
+            found,
+            message: 'Usuários encontrados',
         };
     }
 }
