@@ -1,7 +1,7 @@
 import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { CreateTeamDto } from './dto/create-team.dto';
-import { Team } from './teams.entity';
 import { TeamsService } from './teams.service';
+import { ReturnTeamDto } from './dto/return-teams.dto';
 
 @Controller('teams')
 export class TeamsController {
@@ -9,9 +9,12 @@ export class TeamsController {
     constructor(private readonly teamsService: TeamsService) { }
 
     @Post()
-    async createTeam(@Body(ValidationPipe) team: CreateTeamDto): Promise<Team> {
-        const result = await this.teamsService.createTeam(team);
-        return (result);
+    async createTeam(@Body(ValidationPipe) team: CreateTeamDto): Promise<ReturnTeamDto> {
+        const returnedTeam = await this.teamsService.createTeam(team);
+        return {
+            returnedTeam,
+            message: "Time cadastrado com sucesso"
+        };
     }
 
 }
